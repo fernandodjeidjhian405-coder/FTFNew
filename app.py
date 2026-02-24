@@ -975,9 +975,15 @@ if st.session_state.user_id is None:
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.caption("Create an account or log in to continue.")
-        login_tab, register_tab = st.tabs(["Login", "Register"])
+        auth_mode = st.radio(
+            "Choose mode",
+            ["Login", "Register"],
+            horizontal=True,
+            label_visibility="collapsed",
+            key="auth_mode_switch",
+        )
 
-        with login_tab:
+        if auth_mode == "Login":
             with st.form("login_form"):
                 login_username = st.text_input(
                     "Username",
@@ -1013,7 +1019,7 @@ if st.session_state.user_id is None:
                         else:
                             st.error("Invalid username or password.")
 
-        with register_tab:
+        else:
             with st.form("register_form"):
                 reg_username = st.text_input(
                     "Username",
@@ -1146,8 +1152,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Greeting
-hour = datetime.now().hour
+# Greeting (Philippine Time)
+hour = now_ph().hour
 if 5 <= hour < 12:
     time_greeting = "Good morning"
 elif 12 <= hour < 17:
