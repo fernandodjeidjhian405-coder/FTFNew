@@ -1257,11 +1257,6 @@ with tab_mood:
 
                 if len(results) > 1:
                     st.info(f"**{len(results)} face(s) detected.** Using the first face for mood logging.")
-
-                with st.expander("Detailed probabilities"):
-                    sorted_probs = sorted(top_result["all_probabilities"].items(), key=lambda x: x[1], reverse=True)
-                    for emotion, prob in sorted_probs:
-                        st.progress(prob / 100, text=f"{emotion}: {prob:.1f}%")
             else:
                 st.warning("Oops! We missed you that time. Let's try again - make sure you're front and center!")
 
@@ -1299,10 +1294,6 @@ with tab_mood:
                             f'</div>',
                             unsafe_allow_html=True,
                         )
-                        with st.expander(f"Face {i + 1} - Detailed probabilities"):
-                            sorted_probs = sorted(res["all_probabilities"].items(), key=lambda x: x[1], reverse=True)
-                            for emotion, prob in sorted_probs:
-                                st.progress(prob / 100, text=f"{emotion}: {prob:.1f}%")
 
     # -------------------------------------------------------------------
     # Mood result, intensity, and activities (below face scanning)
