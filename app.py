@@ -591,19 +591,6 @@ def detect_emotions(image_input, model, face_detector):
     return frame_rgb, results
 
 
-def mirror_image(image_input):
-    """Mirror image horizontally for camera-like preview behavior."""
-    if isinstance(image_input, Image.Image):
-        frame = np.array(image_input)
-        if len(frame.shape) == 2:
-            frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
-        elif frame.shape[2] == 4:
-            frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2RGB)
-        mirrored = cv2.flip(frame, 1)
-        return Image.fromarray(mirrored)
-    return image_input
-
-
 # -------------------------------------------------------------------
 # Emotion-specific content (all 7 emotions)
 # -------------------------------------------------------------------
@@ -629,7 +616,7 @@ JOURNAL_QUESTIONS = {
         "How would you describe your energy level right now?",
     ],
     "Disgust": [
-        "What caused this feeling of disgust?",
+        "What caused this feeling?",
         "Is this related to something you saw, heard, or experienced?",
         "What would help you feel more at ease right now?",
     ],
@@ -1260,7 +1247,6 @@ with tab_mood:
 
         if img_file is not None:
             camera_image = Image.open(img_file)
-            camera_image = mirror_image(camera_image)
             with st.spinner("Analyzing emotions..."):
                 annotated_image, results = detect_emotions(camera_image, model, face_detector)
 
