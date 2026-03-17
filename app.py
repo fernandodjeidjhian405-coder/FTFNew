@@ -1106,11 +1106,6 @@ st.markdown(
     }
     .stTextInput input { background-color: #ffffff; border: 2px solid #e2e8f0; color: #000000; }
     .stTextInput input:focus { box-shadow: 0 0 10px rgba(0,0,0,0.1); border-color: #1f2937; }
-    /* Try to un-mirror live front-camera preview in Streamlit camera input */
-    [data-testid="stCameraInput"] video {
-        transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-    }
     .stSlider [data-baseweb="slider"] div { transition: all 0.2s ease; }
     .stTabs [data-baseweb="tab"] { color: #475569; }
     .stTabs [data-baseweb="tab"]:hover { color: #000000; }
