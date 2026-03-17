@@ -1048,11 +1048,13 @@ if st.session_state.user_id is None:
                 reg_password = st.text_input(
                     "Password",
                     type="password",
+                    placeholder="At least 8 characters, include numbers and letters",
                     key="register_password",
                 )
                 reg_confirm_password = st.text_input(
                     "Confirm password",
                     type="password",
+                    placeholder="At least 8 characters, include numbers and letters",
                     key="register_confirm_password",
                 )
                 register_submitted = st.form_submit_button("Create account")
