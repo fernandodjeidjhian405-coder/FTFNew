@@ -1244,9 +1244,9 @@ with tab_mood:
         )
         mirror_front_camera = st.checkbox(
             "Mirror front camera",
-            value=True,
+            value=False,
             key="mirror_front_camera",
-            help="Enable selfie-style mirror view.",
+            help="Applies to captured image/output only.",
         )
 
         img_file = st.camera_input("Capture your face", label_visibility="collapsed")
