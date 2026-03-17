@@ -1242,18 +1242,20 @@ with tab_mood:
             "Position yourself in the frame and take your photo when you're ready. "
             "Let's see what your expression has to tell us about you today."
         )
-        mirror_front_camera = st.checkbox(
-            "Mirror front camera",
-            value=False,
-            key="mirror_front_camera",
-            help="Applies to captured image/output only.",
+        camera_mode = st.radio(
+            "Camera mode",
+            ["Front camera (selfie mirror)", "Back camera (real-world)"],
+            index=0,
+            horizontal=True,
+            key="camera_mode",
+            help="This applies to captured image/output orientation.",
         )
 
         img_file = st.camera_input("Capture your face", label_visibility="collapsed")
 
         if img_file is not None:
             camera_image = Image.open(img_file)
-            if mirror_front_camera:
+            if camera_mode == "Front camera (selfie mirror)":
                 camera_image = camera_image.transpose(Image.FLIP_LEFT_RIGHT)
             with st.spinner("Analyzing emotions..."):
                 annotated_image, results = detect_emotions(camera_image, model, face_detector)
