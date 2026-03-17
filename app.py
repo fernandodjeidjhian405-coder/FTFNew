@@ -506,18 +506,6 @@ LABELS_DICT = {
     4: "Neutral", 5: "Sad", 6: "Surprise",
 }
 
-# Present only these four emotions in the app by mapping the
-# other model classes into the nearest user-facing category.
-PRESENTED_MOOD_MAP = {
-    "Angry": "Angry",
-    "Disgust": "Angry",
-    "Fear": "Sad",
-    "Happy": "Happy",
-    "Neutral": "Neutral",
-    "Sad": "Sad",
-    "Surprise": "Neutral",
-}
-
 EMOTION_EMOJIS = {
     "Angry": "", "Disgust": "", "Fear": "", "Happy": "",
     "Neutral": "", "Sad": "", "Surprise": "",
@@ -580,17 +568,9 @@ def detect_emotions(image_input, model, face_detector):
         reshaped = np.reshape(normalize, (1, 48, 48, 1))
         result = model.predict(reshaped, verbose=0)
         label_idx = np.argmax(result, axis=1)[0]
-        raw_label = LABELS_DICT[label_idx]
-        label = PRESENTED_MOOD_MAP.get(raw_label, raw_label)
+        label = LABELS_DICT[label_idx]
         confidence = float(result[0][label_idx]) * 100
-
-        # Aggregate 7-class model probabilities into 4 presented categories.
-        all_probs = {"Happy": 0.0, "Sad": 0.0, "Angry": 0.0, "Neutral": 0.0}
-        for i in range(7):
-            raw_name = LABELS_DICT[i]
-            mapped_name = PRESENTED_MOOD_MAP.get(raw_name, raw_name)
-            if mapped_name in all_probs:
-                all_probs[mapped_name] += float(result[0][i]) * 100
+        all_probs = {LABELS_DICT[i]: float(result[0][i]) * 100 for i in range(7)}
 
         color = EMOTION_CV_COLORS.get(label, (50, 50, 255))
         cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
